@@ -1,0 +1,14 @@
+- name: delete html directory
+  ansible.builtin.file:
+    path: "{{ APP_LOCATION }}" #frontend is /usr/share/nginx/html; backend is /app
+    state: absent
+    
+- name: create app directory
+  ansible.builtin.file:
+    path: "{{ APP_LOCATION }}" #frontend is /usr/share/nginx/html; backend is /app
+    state: directory
+
+- name: download app code
+  ansible.builtin.unarchive:   #downloads and extracts the file aswell 
+    src: "https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{ COMPONENT }}-v2.zip"
+    dest: "{{ APP_LOCATION }}"
